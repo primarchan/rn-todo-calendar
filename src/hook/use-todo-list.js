@@ -138,8 +138,14 @@ export const useTodoList = (selectedDate) => {
 
   const resetInput = () => setInput("");
 
+  const filteredTodoList = todoList.filter((todo) => {
+    const isSameDate = dayjs(todo.date).isSame(selectedDate, "date");
+    return isSameDate;
+  });
+
   return {
-    todoList,
+    // todoList,
+    filteredTodoList,
     addTodo,
     removeTodo,
     toggleTodo,
