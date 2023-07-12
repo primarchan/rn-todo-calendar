@@ -27,13 +27,13 @@ export const useTodoList = (selectedDate) => {
   const [input, setInput] = useState("");
 
   const addTodo = () => {
-    const len = todoList.length;
+    const len = todoList.length; // 3
     const lastId = len === 0 ? 0 : todoList[len - 1].id;
 
     const newTodoList = [
       ...todoList,
       {
-        id: 4,
+        id: lastId + 1,
         content: input,
         date: selectedDate,
         isSuccess: false,
@@ -58,5 +58,12 @@ export const useTodoList = (selectedDate) => {
     setTodoList(newTodoList);
   };
 
-  return {};
+  return {
+    todoList,
+    addTodo,
+    removeTodo,
+    toggleTodo,
+    input,
+    setInput,
+  };
 };

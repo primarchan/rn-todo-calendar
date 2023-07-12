@@ -4,7 +4,8 @@
 
 - `yarn add dayjs`
 - `expo install react-native-modal-datetime-picker @react-native-community/datetimepicker` [관련 링크](https://github.com/mmazzarolo/react-native-modal-datetime-picker)
-- `yarn add react-native-modal-datetime-picker @react-native-community/datetimepicker``
+- `yarn add react-native-modal-datetime-picker @react-native-community/datetimepicker`
+- `yarn add react-native-iphone-x-helper`
 
 ## 산출물
 
