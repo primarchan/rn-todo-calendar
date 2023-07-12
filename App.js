@@ -14,6 +14,8 @@ import { runPracticeDayjs } from "./src/practice-dayjs";
 import Margin from "./src/Margin";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { useCalendar } from "./src/hook/use-calendar";
+import { useTodoList } from "./src/hook/use-todo-list";
 
 const columnSize = 35;
 
@@ -49,33 +51,23 @@ const ArrowButton = ({ iconName, onPress }) => {
 
 export default function App() {
   const now = dayjs();
-  const [selectedDate, setSelectedDate] = useState(now);
   const columns = getCalendarColumns(selectedDate);
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
+  const {
+    selectedDate,
+    setSelectedDate,
+    isDatePickerVisible,
+    showDatePicker,
+    hideDatePicker,
+    handleConfirm,
+    subtract1Month,
+    add1Month,
+  } = useCalendar(now);
 
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
+  const {} = useTodoList(selectedDate);
 
-  const handleConfirm = (date) => {
-    // console.warn("A date has been picked: ", date);
-    setSelectedDate(dayjs(date));
-    hideDatePicker();
-  };
-
-  const onPressLeftArrow = () => {
-    const newSelectedDate = dayjs(selectedDate).subtract(1, "month");
-    setSelectedDate(newSelectedDate);
-  };
-
-  const onPressRightArrow = () => {
-    const newSelectedDate = dayjs(selectedDate).add(1, "month");
-    setSelectedDate(newSelectedDate);
-  };
+  const onPressLeftArrow = subtract1Month;
+  const onPressRightArrow = add1Month;
 
   const ListHeaderComponent = () => {
     const currentDateText = dayjs(selectedDate).format("YYYY.MM.DD.");
@@ -143,16 +135,8 @@ export default function App() {
 
   useEffect(() => {
     runPracticeDayjs();
-
     // console.log("columns", columns);
   });
-
-  useEffect(() => {
-    console.log(
-      "changed selectedDate : ",
-      dayjs(selectedDate).format("YYYY.MM.DD")
-    );
-  }, [selectedDate]);
 
   return (
     <SafeAreaView style={styles.container}>
