@@ -144,7 +144,7 @@ export const useTodoList = (selectedDate) => {
   });
 
   return {
-    // todoList,
+    todoList,
     filteredTodoList,
     addTodo,
     removeTodo,

@@ -6,7 +6,15 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import { getDayColor, getDayText } from "./util";
 
 const columnSize = 35;
-const Column = ({ text, color, opacity, disabled, onPress, isSelected }) => {
+const Column = ({
+  text,
+  color,
+  opacity,
+  disabled,
+  onPress,
+  isSelected,
+  hasTodo,
+}) => {
   return (
     <TouchableOpacity
       disabled={disabled}
@@ -20,7 +28,9 @@ const Column = ({ text, color, opacity, disabled, onPress, isSelected }) => {
         borderRadius: columnSize / 2,
       }}
     >
-      <Text style={{ color, opacity }}>{text}</Text>
+      <Text style={{ color, opacity, fontWeight: hasTodo ? "bold" : "normal" }}>
+        {text}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -37,6 +47,7 @@ const ArrowButton = ({ iconName, onPress }) => {
 
 export default ({
   columns,
+  todoList,
   selectedDate,
   onPressLeftArrow,
   onPressHeaderDate,
@@ -92,6 +103,9 @@ export default ({
     const isCurrentMonth = dayjs(date).isSame(selectedDate, "month");
     const onPress = () => onPressDate(date);
     const isSelected = dayjs(date).isSame(selectedDate, "date");
+    const hasTodo = todoList.find((todo) =>
+      dayjs(todo.date).isSame(dayjs(date), "date")
+    );
     return (
       <Column
         text={dateText}
@@ -99,6 +113,7 @@ export default ({
         opacity={isCurrentMonth ? 1 : 0.4}
         onPress={onPress}
         isSelected={isSelected}
+        hasTodo={hasTodo}
       />
     );
   };
